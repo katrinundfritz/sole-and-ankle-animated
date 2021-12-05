@@ -6,8 +6,8 @@ import { WEIGHTS } from '../../constants';
 
 const NavLink = ({ children, ...delegated }) => {
   return <Wrapper {...delegated}>
-    <InitialNavLinkText>{children}</InitialNavLinkText>
-    <HighlightedNavLinkText>{children}</HighlightedNavLinkText>
+    <LinkText>{children}</LinkText>
+    <Line />
   </Wrapper>
 }
 
@@ -25,31 +25,31 @@ const Wrapper = styled.a`
   }
 `;
 
-const LinkText = styled.span`
-  display: block;
-  backface-visibility: hidden;
-  transform: translateY(var(--translate-from));
+const Line = styled.div`
+  border-top: 1px solid;
+  border-color: inherit;
+  width:100%;
+  transform: translateY(4px);
   transition: transform 500ms;
 
-  @media (prefers-reduced-motion: no-preference) {
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
     ${Wrapper}:hover & {
-      transform: translateY(var(--translate-to));
-      transition: transform 250ms;
+      transform: translateY(0);
+      transition: transform 300ms;
     }
   }
 `
 
-const InitialNavLinkText = styled(LinkText)`
-  --translate-from: 0%;
-  --translate-to: -100%;
-`
+const LinkText = styled.span`
+  display: block;
+  transform: translateY(0);
+  transition: transform 500ms;
 
-const HighlightedNavLinkText = styled(LinkText)`
-  --translate-from: 100%;
-  --translate-to: 0%;
-  position: absolute;
-  font-weight: bold;
-  top: 0;
-  left: 0;
+  @media (prefers-reduced-motion: no-preference) {
+    ${Wrapper}:hover & {
+      transform: translateY(-4px);
+      transition: transform 300ms;
+    }
+  }
 `
 export default NavLink;
